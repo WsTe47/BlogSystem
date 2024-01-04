@@ -1,4 +1,4 @@
-package BlogSystem
+package cmd
 
 import (
 	"fmt"
