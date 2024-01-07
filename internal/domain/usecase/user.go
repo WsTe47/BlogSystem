@@ -1,10 +1,11 @@
-package domain
+package usecase
 
 import (
+	"context"
 	"time"
 )
 
-type User struct {
+type UserInformation struct {
 	ID        uint `gorm:"primarykey"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -17,6 +18,11 @@ type User struct {
 }
 
 // 表名为 "users"
-func (User) TableName() string {
+func (UserInformation) TableName() string {
 	return "users"
+}
+
+type User interface {
+	QueryUser(ctx context.Context, username string) (int, error)
+	SaveUserRegister(ctx context.Context, user UserInformation) (int, error)
 }
