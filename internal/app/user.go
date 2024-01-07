@@ -22,6 +22,16 @@ type User struct {
 	UI *impl.UserImpl
 }
 
+func NewUser(
+	Db *data.DbClient,
+	UI *impl.UserImpl,
+) *User {
+	return &User{
+		Db: Db,
+		UI: UI,
+	}
+}
+
 func (user *User) Login(ctx context.Context, db *data.DbClient, userName, passWord string) {
 
 }
@@ -72,5 +82,6 @@ func (user *User) Register(ctx context.Context, username, password, phone string
 		// 用户已存在
 		return userID, fmt.Errorf("用户已存在")
 	}
+
 	return userID, nil
 }
