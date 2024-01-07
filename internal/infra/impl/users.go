@@ -2,16 +2,18 @@ package impl
 
 import (
 	"BlogSystem/internal/domain/usecase"
-	"BlogSystem/internal/infra/data"
 	"context"
+	"gorm.io/gorm"
 )
 
+var TableUser = "users"
+
 type UserImpl struct {
-	Db *data.DbClient
+	Db *gorm.DB
 }
 
 func NewUserImpl(
-	Db *data.DbClient,
+	Db *gorm.DB,
 ) *UserImpl {
 	return &UserImpl{
 		Db: Db,
@@ -19,16 +21,16 @@ func NewUserImpl(
 }
 
 func (UI *UserImpl) QueryUser(ctx context.Context, username string) (int, error) {
-	var id int
-	err := UI.Db.DB.Where("username = ?", username).First(&id).Error
+	var userInformation usecase.UserInformation
+	err := UI.Db.Table(TableUser).Where("name = ?", username).First(&userInformation).Error
 	if err != nil {
 		return -1, err
 	}
-	return id, nil
+	return int(userInformation.ID), nil
 }
 func (UI *UserImpl) SaveUserRegister(ctx context.Context, user usecase.UserInformation) (int, error) {
 
-	err := UI.Db.DB.Create(&user).Error
+	err := UI.Db.Table(TableUser).Create(&user).Error
 	if err != nil {
 		return -1, err
 	}

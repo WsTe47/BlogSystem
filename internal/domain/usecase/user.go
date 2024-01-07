@@ -6,15 +6,15 @@ import (
 )
 
 type UserInformation struct {
-	ID        uint `gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Name      string `gorm:"type:varchar(12);unique;not null"`
-	Phone     string `gorm:"type:varchar(11);unique;not null"`
-	Password  string `gorm:"type:varchar(12);not null"`
-	Role      int
-	State     int
-	Likes     []int `gorm:"type:text"` // 需要序列化处理，具体开发时再定
+	ID        uint      `gorm:"column:id;primarykey"`
+	CreatedAt time.Time `gorm:"column:createdat"`
+	UpdatedAt time.Time `gorm:"column:updatedat"`
+	Name      string    `gorm:"column:name"`
+	Phone     string    `gorm:"column:phone"`
+	Password  string    `gorm:"column:password"`
+	Role      int       `gorm:"column:role"`
+	State     int       `gorm:"column:state"`
+	Likes     string    `gorm:"column:likes"` //这里该存切片，但现在写会有问题。后续处理。 需要序列化处理，具体开发时再定
 }
 
 // 表名为 "users"

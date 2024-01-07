@@ -5,18 +5,14 @@ import (
 	"gorm.io/gorm"
 )
 
-const dsn = "user:password@tcp(127.0.0.1:3306)/dbname?parseTime=True"
+const dsn = "climber47:abcd4321@tcp(123.60.48.133:3306)/blogsystem?parseTime=True"
 
-type DbClient struct {
-	DB *gorm.DB
-}
-
-func NewDbClient() (*DbClient, error) {
+func NewDbClient() (*gorm.DB, error) {
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return &DbClient{}, err
+		return nil, err
 	}
 
-	return &DbClient{DB: db}, nil
+	return db, nil
 }
